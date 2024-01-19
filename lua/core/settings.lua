@@ -11,9 +11,6 @@ set.shiftwidth = 2
 set.expandtab = true
 set.termguicolors = true
 
-
--- Mapping <leader>
-vim.g.mapleader = ' '
-
--- Set colorshceme
-vim.cmd.colorscheme('kanagawa-wave')
+vim.keymap.set("n", " ", "<Nop>", { silent = true, remap = true })
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "

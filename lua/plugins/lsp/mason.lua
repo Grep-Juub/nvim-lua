@@ -1,0 +1,25 @@
+-- return {
+--   { 
+--     "williamboman/mason.nvim",
+--     lazy = false,
+--     opts = {
+--       ui = {border = 'rounded'}
+--     }
+--   },
+--   {
+--     "williamboman/mason-lspconfig.nvim",
+--     opts = {
+--         ensured_installed = {
+--           "ansiblels",
+--           "bashls",
+--           "eslint",
+--           "lua_ls",
+--           "terraformls"
+--         },
+--     },
+--     config = function(_, opts)
+--       require("lspconfig").setup(opts)
+--     end,
+--   }
+-- }
+return {}

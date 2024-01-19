@@ -1,3 +1,5 @@
+require("core.init")
+
 local lazy = {}
 
 function lazy.install(path)
@@ -70,4 +72,5 @@ lazy.path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 lazy.opts = {}
 lazy.setup(plugins)
 
-require("core.init")
+vim.cmd.colorscheme('kanagawa-wave')
+
