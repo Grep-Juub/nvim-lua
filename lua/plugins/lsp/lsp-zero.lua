@@ -1,7 +1,7 @@
 return {
   {
     'VonHeikemen/lsp-zero.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     cmd = 'Mason',
     branch = 'v3.x',
     dependencies = {
@@ -34,7 +34,10 @@ return {
       require('mason-lspconfig').setup({
         -- Replace the language servers listed here
         -- with the ones you want to install
-        ensure_installed= {
+        ensure_installed = {
+          "jsonls",
+          "tsserver",
+          "pyright",
           "ansiblels",
           "bashls",
           "eslint",
@@ -47,14 +50,32 @@ return {
         },
       })
 
-      lsp.on_attach(function(client, bufnr)
-        lsp.default_keymaps({buffer = bufnr})
-        local opts = {buffer = bufnr}
+      lsp.on_attach(function(_, bufnr)
+        lsp.default_keymaps({ buffer = bufnr })
+        local opts = { buffer = bufnr }
 
-        vim.keymap.set({'n', 'x'}, 'gq', function()
-          vim.lsp.buf.format({async = false, timeout_ms = 10000})
+        vim.keymap.set({ 'n', 'x' }, 'gq', function()
+          vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
         end, opts)
       end)
+
+      lsp.set_server_config({
+        on_init = function(client)
+          client.server_capabilities.semanticTokensProvider = nil
+        end,
+      })
+
+      lsp.format_on_save({
+        format_opts = {
+          async = false,
+          timeout_ms = 10000,
+        },
+        servers = {
+          ['terraformls'] = { 'hcl', 'terraform', 'tf'},
+          ['jsonls'] = { 'json' },
+          ['tsserver'] = { 'typescript' }
+        }
+      })
 
 
       local cmp = require('cmp')
@@ -74,10 +95,6 @@ return {
         mapping = {
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
         },
-        window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
-        },
         snippet = {
           expand = function(args)
             require('luasnip').lsp_expand(args.body)
@@ -93,7 +110,6 @@ return {
             { name = "cmdline" },
           }),
       })
-
     end
   },
   { 'saadparwaiz1/cmp_luasnip' },
