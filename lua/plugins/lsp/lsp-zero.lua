@@ -3,6 +3,7 @@ return {
     'VonHeikemen/lsp-zero.nvim',
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     cmd = 'Mason',
+    lazy = false,
     branch = 'v3.x',
     dependencies = {
       { 'neovim/nvim-lspconfig' },
@@ -42,11 +43,28 @@ return {
           "bashls",
           "eslint",
           "lua_ls",
-          "terraformls"
+          "terraformls",
+          "tflint",
+          "helm-ls",
         },
 
         handlers = {
           lsp.default_setup,
+          helm_ls = function ()
+            local util = require('lspconfig.util')
+            require("lspconfig").helm_ls.setup({
+              cmd = {"helm_ls", "serve"},
+              filetypes = {'helm'},
+              root_dir = function(fname)
+                return util.root_pattern('Chart.yaml')(fname)
+              end,
+              valuesFiles = {
+                mainValuesFile = "values.yaml",
+                lintOverlayValuesFile = "values.lint.yaml",
+                additionalValuesFilesGlobPattern = "values*.yaml"
+              },
+            })
+          end,
         },
       })
 
@@ -68,7 +86,7 @@ return {
       lsp.format_on_save({
         format_opts = {
           async = false,
-          timeout_ms = 10000,
+          timeout_ms = 1000,
         },
         servers = {
           ['terraformls'] = { 'hcl', 'terraform', 'tf'},
@@ -93,6 +111,7 @@ return {
           { name = "path" },
         },
         mapping = {
+          ['<TAB>'] = cmp.mapping.confirm({ select = true }),
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
         },
         snippet = {
@@ -115,3 +134,5 @@ return {
   { 'saadparwaiz1/cmp_luasnip' },
   { 'rafamadriz/friendly-snippets' },
 }
+--
+-- return {}

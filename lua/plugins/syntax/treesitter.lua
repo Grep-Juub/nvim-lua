@@ -98,5 +98,7 @@ return {
       end
       require("nvim-treesitter.configs").setup(opts)
     end,
-  }
+  },
+  -- Add helm syntax highlighting 
+  { "towolf/vim-helm" }
 }
