@@ -64,6 +64,11 @@ return {
         "vimdoc",
         "yaml",
         "terraform",
+        "jsonnet",
+        "go", 
+        "gomod",
+        "gowork",
+        "gosum",
       },
       incremental_selection = {
         enable = true,

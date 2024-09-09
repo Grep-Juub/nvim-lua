@@ -10,23 +10,23 @@ return {
         ["gs"] = { name = "+surround" },
         ["]"] = { name = "+next" },
         ["["] = { name = "+prev" },
-        ["<leader><tab>"] = { name = "+tabs" },
-        ["<leader>b"] = { name = "+buffer" },
-        ["<leader>c"] = { name = "+code" },
-        ["<leader>f"] = { name = "+file/find" },
-        ["<leader>g"] = { name = "+git" },
-        ["<leader>gh"] = { name = "+hunks" },
-        ["<leader>q"] = { name = "+quit/session" },
-        ["<leader>s"] = { name = "+search" },
-        ["<leader>u"] = { name = "+ui" },
-        ["<leader>w"] = { name = "+windows" },
-        ["<leader>x"] = { name = "+diagnostics/quickfix" },
+        ["<leader>"] = {
+          t = { name = "tabs" },
+          f = { name = "file" },
+          c = { name = "code" },
+          g = { name = "goto" },
+          h = { name = "help" },
+          w = { name = "windows" },
+          s = { name = "session" },
+          r = { name = "search" },
+          d = { name = "diagnostics/quickfix" },
+        },
       },
     },
     config = function(_, opts)
       local wk = require("which-key")
-      wk.setup(opts)
-      wk.register(opts.defaults)
+      -- wk.setup(opts)
+      -- wk.add(opts.defaults)
     end,
   }
 }

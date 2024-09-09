@@ -1,0 +1,6 @@
+-- vim.cmd([[
+--   augroup hcl_ft
+--     autocmd!
+--     autocmd BufRead,BufNewFile *.hcl,terragrunt.hcl setfiletype hcl
+--   augroup END
+-- ]])

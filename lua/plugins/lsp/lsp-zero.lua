@@ -31,13 +31,15 @@ return {
         hint = '⚑',
         info = '»'
       })
-      require('mason').setup({})
+      require('mason').setup(
+        {opts = { ensure_installed = { "goimports", "gofumpt" } }
+      })
       require('mason-lspconfig').setup({
         -- Replace the language servers listed here
         -- with the ones you want to install
         ensure_installed = {
           "jsonls",
-          "tsserver",
+          "ts_ls",
           "pyright",
           "ansiblels",
           "bashls",
@@ -45,7 +47,10 @@ return {
           "lua_ls",
           "terraformls",
           "tflint",
-          "helm-ls",
+          "helm_ls",
+          "jsonnet_ls",
+          "ast_grep",
+          "gopls",
         },
 
         handlers = {
@@ -65,6 +70,38 @@ return {
               },
             })
           end,
+          ast_grep = function ()
+            local util = require('lspconfig.util')
+            require("lspconfig").ast_grep.setup({
+              cmd = { "ast-grep", "lsp" },
+              filetypes = { "c", "cpp", "rust", "go", "java", "python", "javascript", "typescript", "html", "css", "kotlin", "dart", "lua" },
+              root_dir = function (fname)
+                return util.root_pattern('~/.config/ast-grep/sgconfig.yml')(fname)
+              end,
+            })
+          end,
+          gopls = function ()
+            require("lspconfig").gopls.setup({
+              settings = {
+                gopls = {
+                  gofumpt = true
+                }
+              }
+            })
+          end,
+          terraformls = function()
+            require("lspconfig").terraformls.setup({
+              filetypes = { 'terraform' },
+              settings = {
+                validateOnSave = true,
+              },
+              init_options = {
+                experimentalFeatures = {
+                  prefillRequiredFields = true,
+                },
+              },
+            })
+          end
         },
       })
 
@@ -91,7 +128,8 @@ return {
         servers = {
           ['terraformls'] = { 'hcl', 'terraform', 'tf'},
           ['jsonls'] = { 'json' },
-          ['tsserver'] = { 'typescript' }
+          ['ts_ls'] = { 'typescript' },
+          ['gopls'] = { 'go' },
         }
       })
 
