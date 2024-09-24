@@ -65,7 +65,7 @@ return {
         "yaml",
         "terraform",
         "jsonnet",
-        "go", 
+        "go",
         "gomod",
         "gowork",
         "gosum",

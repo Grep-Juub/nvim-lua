@@ -72,5 +72,4 @@ lazy.path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 lazy.opts = {}
 lazy.setup(plugins)
 
-vim.cmd.colorscheme('kanagawa-wave')
-
+require("core.ui")

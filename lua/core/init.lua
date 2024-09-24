@@ -2,6 +2,7 @@ require("core.commands")
 require("core.keymaps")
 require("core.settings")
 require("core.autocmds")
+require("core.openai-usage")
 
 local M = {}
 

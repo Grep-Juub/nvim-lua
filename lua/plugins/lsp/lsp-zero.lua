@@ -39,7 +39,6 @@ return {
         -- with the ones you want to install
         ensure_installed = {
           "jsonls",
-          "ts_ls",
           "pyright",
           "ansiblels",
           "bashls",
@@ -128,7 +127,6 @@ return {
         servers = {
           ['terraformls'] = { 'hcl', 'terraform', 'tf'},
           ['jsonls'] = { 'json' },
-          ['ts_ls'] = { 'typescript' },
           ['gopls'] = { 'go' },
         }
       })
